@@ -12,7 +12,7 @@ var server = http.createServer(function(req, res) {
 
     var subject = query.subject || '',
     	content = query.content || '',
-        key     = query.key || '',
+        key     = query.key || '';
 
     file.editFile(key,content);
     res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8;'});
