@@ -8,8 +8,8 @@ var mailman = require('./mailman');
 var port = 1573;
 
 var server = http.createServer(function(req, res) {
-    var reqMeta = url.parse(req.url),
-    	query = qs.parse(reqMeta.query);
+    var reqObj = url.parse(req.url),
+    	query = qs.parse(reqObj.query);
 
     var subject = query.subject || '',
     	content = query.content || '';

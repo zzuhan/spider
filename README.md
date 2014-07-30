@@ -3,11 +3,39 @@
 
 TODO
 
-优化
+高:
+
+- 如何再进入抓取flash的地址
+- 如何跑一个序列来并发抓取
+- 如何再
+
+优化:
+
 - 如果evaluate出错了，怎么检测
+
+Bugs:
 
 TODO：
 // 覆写console.dir 方法，更加类似于node的console.dir方法
 
 ISSUES：
-有的时候，跑出的结果不正确 waiUntil
+
+## 疑问
+- 游戏页url跟中间页url关系 47931.html 47931_1.html 
+
+
+## flash地址在哪里
+真实url: http://sda.4399.com/4399swf/upload_swf/ftp3/haibo/20110124/1.swf
+
+demo1 
+
+var str1 = "/upload_swf/ftp3/haibo/20110124/1.swf"
+var webServer = "http://sda.4399.com/4399swf"
+
+demo2
+
+http://sda.4399.com/4399swf/upload_swf/ftp8/caoxinxin/20120530/3.swf
+
+## capserjs多线程
+
+- 

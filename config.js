@@ -4,6 +4,7 @@ var filepathArr = __filepath.split('/');
 filepathArr.pop();
 window.__dirname = filepathArr.join('/');
 
+// casperjs 配置
 module.exports = {
 	viewportSize: {width:1366, height:768},
 	clientScripts: [ __dirname + "/assets/jquery.js", __dirname + "/assets/alarm.js" ],
