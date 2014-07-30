@@ -1,6 +1,6 @@
 var monitor = require('monitor');
 
-var url = 'http://www.4399.com/flash/138004.htm';
+var url = 'http://www.4399.com/flash/108635.htm';
 
 monitor.addGuard(url, function () {
 	// 做成map吧
@@ -11,15 +11,18 @@ monitor.addGuard(url, function () {
 		// 将GameKey的el移除
 		manual_op: '.operate',
 		// 通过判断其附近的title 如何开始，游戏目标
-		manual_start: '.game_caption'
+		manual_start: '.game_caption',
 		manual_goal: '.game_caption'
 	}
 
 		data = {};
-
+		$(selectors.manual_op).find('#GameKey').remove();
 	data.name = $(selectors.name).text();
 	data.thumbUrl = $(selectors.thumb).attr('src');
 	data.desc = $(selectors.desc).text();
+	data.manualop = $(selectors.manual_op).text();
+	data.start = $($(selectors.manual_start)[0]).text();
+	data.goal = $($(selectors.manual_goal)[1]).text();
 
 	// 通知
 	// title content 
