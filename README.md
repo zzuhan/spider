@@ -8,10 +8,13 @@ TODO
 - 如何再进入抓取flash的地址
 - 如何跑一个序列来并发抓取
 - 如何再
+- 使用superman 监控server代码的改变
 
 优化:
 
 - 如果evaluate出错了，怎么检测
+- 引入代码检查，每个js写上jshint注释，jshint
+- console.record modules/record.js 之间传数据，优化的地方
 
 Bugs:
 

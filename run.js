@@ -3,7 +3,7 @@ var spider = require('spider');
 var urls = [
 	'http://www.4399.com/flash/47931.htm',
 	'http://www.4399.com/flash/90302.htm',
-	'http://www.4399.com/flash/135881.htm',
+	// 'http://www.4399.com/flash/135881.htm',
 	// 'http://www.4399.com/flash/90302.htm',
 	// 'http://www.4399.com/flash/133630.htm',
 	// 'http://www.4399.com/flash/6232.htm',
@@ -31,21 +31,32 @@ function grabData() {
 		manual_start: '.game_caption',
 		manual_goal: '.game_caption'
 	},
-		data = {};
+	data = null,
+	href = window.location.href,
+	gkeyRegex = /\/(\d+)\.htm$/i,
+	gkey;
+
+	gkey = href.match(gkeyRegex)[1];
+
 
 	// 删除有影响的数据
 	$(selectors.manual_op).find('#GameKey').remove();
 
+
+	data = {};
 	data.name = $(selectors.name).text();
 	data.thumbUrl = $(selectors.thumb).attr('src');
 	data.desc = $(selectors.desc).text();
+	// 是否把开头的\n\n都给清空了
 	data.manualop = $(selectors.manual_op).text();
 	data.start = $($(selectors.manual_start)[0]).text();
 	data.goal = $($(selectors.manual_goal)[1]).text();
 
 	// 通知
 	// title content 
-	console.alarm('游戏:'+data.name, JSON.stringify(data));
+	// console.alarm('游戏:'+data.name, JSON.stringify(data));
+
+	console.record(gkey, JSON.stringify(data));
 }
 
 // casper.start();

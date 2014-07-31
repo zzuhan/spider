@@ -6,7 +6,6 @@ var casper = require('casper').create(config);
 // 这部分和alarm有点耦合，可以写成register(type, handler)
 // ls
 casper.on('remote.message', function (msg) {
-	this.echo('remote message' + msg);
 	this.echo('remote message caught: ' + msg);
 
 	var rType = /^\[(\w+)\]/i;
@@ -17,11 +16,16 @@ casper.on('remote.message', function (msg) {
 		
 		require('modules/alarm')(data)
 	}
+	if(type == 'record') {
+		var data = JSON.parse( msg.replace(rType, '') );
+
+		require('modules/record')(data)
+	}
 });
 
 /**
  * 访问核心
- * @param {String} url          抓取的url
+ * @param {String|Array} url          抓取的url
  * @param {String} waitSelector 等待出现的DOM的selector
  * @param {[type]} listener     执行函数
  */
@@ -42,13 +46,4 @@ exports.run = function run(func) {
 	});
 }
 
-/**
- * [addGrabs description]
- * @param {[type]} urls         [description]
- * @param {[type]} waitSelector [description]
- * @param {[type]} listener     [description]
- */
-exports.addGrabs = function addGrabs(urls, waitSelector, listener) {
-	
-};
 

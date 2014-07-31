@@ -7,7 +7,7 @@ window.__dirname = filepathArr.join('/');
 // casperjs 配置
 module.exports = {
 	viewportSize: {width:1366, height:768},
-	clientScripts: [ __dirname + "/assets/jquery.js", __dirname + "/assets/alarm.js" ],
+	clientScripts: [ __dirname + "/assets/jquery.js", __dirname + "/assets/functions.js" ],
 	pageSettings: { loadImages: false },
 	verbose: true,
 	onError: function (casper, msg) {
@@ -15,3 +15,4 @@ module.exports = {
 		casper.exit();
 	}
 }
+

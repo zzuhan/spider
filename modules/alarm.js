@@ -1,6 +1,15 @@
 function alarm(data){
 	var page = require('webpage').create();
 
+	function buildUrl(subject, content){
+		var url = 'http://localhost:1573?';
+
+		url += ('&subject=' + encodeURIComponent(subject));
+		url += ('&content=' + encodeURIComponent(content));
+
+		return url;
+	}
+
 	var url = buildUrl(data.subject, data.content);
 	console.log('【报警】 url: ' + url);
 	page.open(url, function (status) {
@@ -11,14 +20,7 @@ function alarm(data){
 		}
 	});
 
-	function buildUrl(subject, content){
-		var url = 'http://localhost:1573?';
-
-		url += ('&subject=' + encodeURIComponent(subject));
-		url += ('&content=' + encodeURIComponent(content));
-
-		return url;
-	}
+	
 }
 module.exports = alarm;
 
