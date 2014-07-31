@@ -2,12 +2,15 @@ var fs = require('fs');
 
 var dbFile = __dirname + '/data.json';
 
+// 不能算真正意义的save
 var save = exports.save = function(key, value){
 	var id = key;
 
 	fs.readFile(dbFile, function (err, data) {
 			data = data ? JSON.parse(data.toString()) : {};
 
+            // TODO
+            // data[key] = extend(data[key] || {} , value)
             data[key] = value;
 
             console.log(data);
