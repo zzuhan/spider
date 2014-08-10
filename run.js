@@ -1,84 +1,77 @@
-var spider = require('spider');
+// #!/usr/bin/env casperjs
+// @todo 
+// - 这个文件就不要动了，自动读取suites中的内容，然后执行抓取
+// - 加入支持suites=dfh,4399 的输入
 
-var urls = [
-	'http://www.4399.com/flash/47931.htm',
-	'http://www.4399.com/flash/90302.htm',
-	// 'http://www.4399.com/flash/135881.htm',
-	// 'http://www.4399.com/flash/90302.htm',
-	// 'http://www.4399.com/flash/133630.htm',
-	// 'http://www.4399.com/flash/6232.htm',
-	// 'http://www.4399.com/flash/138380.htm',
-	// 'http://www.4399.com/flash/136516.htm',
-	// 'http://www.4399.com/flash/70215.htm',
-	// 'http://www.4399.com/flash/21674.htm',
-	// 'http://www.4399.com/flash/137953.htm',
-	// 'http://www.4399.com/flash/138596.htm',
-	'http://www.4399.com/flash/138976.htm'
-],
-	waitSelector = '.lplay';
+/**
+ * 可以方便的控制只走哪一步，
+ */
 
-// var url = 'http://www.4399.com/flash/108635.htm';
+var require = patchRequire(require);
+var fs = require('fs');
 
-function grabData() {
-	// 做成map吧
-	var selectors = {
-		name: '.b1_m_r h1',
-		thumb: '#curpic',
-		desc: '#introduce2',
-		// 将GameKey的el移除
-		manual_op: '.operate',
-		// 通过判断其附近的title 如何开始，游戏目标
-		manual_start: '.game_caption',
-		manual_goal: '.game_caption'
-	},
-	data = null,
-	href = window.location.href,
-	gkeyRegex = /\/(\d+)\.htm$/i,
-	gkey;
+var Spider = require('./spider/spider');
 
-	gkey = href.match(gkeyRegex)[1];
+var grabInfo = require('suites/info');
+var	grabFlash = require('suites/flash');
+var	grabFlash2 = require('suites/flash2');
+var	test = require('suites/test');
+var	dfh = require('suites/dfh');
 
+var spider;
 
-	// 删除有影响的数据
-	$(selectors.manual_op).find('#GameKey').remove();
-
-
-	data = {};
-	data.name = $(selectors.name).text();
-	data.thumbUrl = $(selectors.thumb).attr('src');
-	data.desc = $(selectors.desc).text();
-	// 是否把开头的\n\n都给清空了
-	data.manualop = $(selectors.manual_op).text();
-	data.start = $($(selectors.manual_start)[0]).text();
-	data.goal = $($(selectors.manual_goal)[1]).text();
-
-	// 通知
-	// title content 
-	// console.alarm('游戏:'+data.name, JSON.stringify(data));
-
-	console.record(gkey, JSON.stringify(data));
-}
-
-// casper.start();
-
-// casper.then(function () {
-// 	this.echo("Starting grab many pages");
-// });
-
-spider.addGrab(urls[0], waitSelector, grabData);
-
-// TODO 下面这一部分，封装进spider, 函数addGrabs
-var currentIndex = 1;
-
-var check = function () {
-	if(urls[currentIndex]) {
-		spider.addGrab(urls[currentIndex], waitSelector, grabData);
-		currentIndex++;
-		spider.run(check);
-	} else {
-		this.echo("Congratulation!!! All done");
-		this.exit();
+function prepare(){
+	var errFile = 'error.txt';
+	if (fs.isFile(errFile)) {
+		fs.remove(errFile);
 	}
 }
 
-spider.run(check);
+// obj是一个
+function startGrab(obj ,then){
+	var options = Spider.utils.extend( (obj.options || {}), {
+		onFinished: then
+	});
+
+	spider.grab(obj.url, obj.waitSelector, obj.inspect, options);
+}
+
+function runSequence(grabs){
+	var grabObj,
+		runOne = function () {
+			// 逻辑
+			if (grabObj = grabs.shift()) {
+				var check = grabObj.check;
+				startGrab(grabObj.prepare(), function () {
+					check && check();
+					runOne();
+				});
+			} else {
+				console.log('All done');
+				spider.exit();
+			}
+		};
+
+	runOne();
+}
+
+/**
+ * Main Logic
+ */
+function init() {
+	spider = Spider.create();
+	// 清空error.fs._toUnixTimestamp(time);
+	prepare();
+
+	// 
+	runSequence([
+		grabInfo,
+		grabFlash,
+		// grabFlash2,
+		// test,
+		// dfh
+	]);
+
+}
+init();
+

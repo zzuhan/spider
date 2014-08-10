@@ -1,0 +1,7 @@
+TypeError: 'undefined' is not a function (evaluating '$("#slide").wslide({
+                width: 260,
+                height: 418,
+                pos: 1,
+                horiz: true
+            })')
+timeout: http://www.4399.com/undefined
