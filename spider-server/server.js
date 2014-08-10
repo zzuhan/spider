@@ -3,17 +3,11 @@ var urlMod = require('url');
 var qs = require('querystring');
 var formBody = require('body/form');
 
-
 var db = require('../db');
 
-// variable
+// variables
 var port = 1177;
 
-function deserialize(){
-    var ret = {};
-
-    return ret;
-}
 
 var server = http.createServer(function handleRequest(req, res) {
     // url related
