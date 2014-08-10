@@ -10,6 +10,7 @@ TODO
 
 
 低：
+- Spider Class可更名为更具体的，其作用 SpiderClient
 - Spider类 分来两大部分 参照下Casperjs的实现，在debug时能找到
 有个Class类负责spider.create的实现，有grab, exit方法
 剩下的组成spider上负责log,error，debugMode，libraryPath等

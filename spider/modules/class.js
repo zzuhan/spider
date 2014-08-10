@@ -6,7 +6,8 @@ var casper = require('casper');
 var utils = require('utils');
 
 var colorizer = require('colorizer').create('Colorizer');
-var defaultConfig = require('../config');
+// @todo why 这个要加.js后缀才能找到
+var defaultConfig = require('../config.js');
 
 var Spider = function (config) {
     // TODO config mix
@@ -75,7 +76,7 @@ Spider.prototype.grab  = function (urls, waitSelector, listener, options) {
     casper.start();
 
     casper.then(function () {
-        this.echo("# Starting grab " + urls.length + " pages", "COMMENT");
+        this.echo("## Starting grab " + urls.length + " pages", "COMMENT");
     });
 
     var check = function () {
@@ -107,5 +108,3 @@ Spider.prototype.exit = function () {
 }
 
 module.exports = Spider;
-
-    

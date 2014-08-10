@@ -2,8 +2,6 @@ require = patchRequire(require);
 
 var spider = require('./spider');
 
-var errorHandler = require('./modules/error-handler');
-
 // casperjs 配置
 module.exports = {
 	viewportSize: { 
